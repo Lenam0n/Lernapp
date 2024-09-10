@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CategorieButton from "../component/CategorieButton";
+import CategorieButton from "../component/CategorieButton.jsx";
 import CategorieHeader from "../component/CategorieHeader";
 import Loading from "../component/Loading";
 import NoQuestions from "../component/NoQuestions";
