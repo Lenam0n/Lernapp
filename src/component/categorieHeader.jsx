@@ -1,9 +1,8 @@
 import React from "react";
+import "./CategorieHeader.css"; // Importiere die CSS-Datei
 
-const categorieHeader = ({label})=>{
-    return(
-        <h2>{label}</h2>
-    );
-}
+const CategorieHeader = ({ label }) => {
+  return <h2 className="categorie-header">{label}</h2>;
+};
 
-export default categorieHeader;
+export default CategorieHeader;

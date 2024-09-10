@@ -1,0 +1,32 @@
+/* Container für die Multiple Choice-Optionen */
+.multiple-choice-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Styling für jede Multiple Choice Option (Button) */
+.multiple-choice-option {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* Hover-Effekt für die Optionen */
+.multiple-choice-option:hover {
+  background-color: #0056b3;
+  border-color: #004080;
+}
+
+/* Stil für die aktive Option (wenn sie ausgewählt ist) */
+.multiple-choice-option.selected {
+  background-color: #28a745;
+  border-color: #218838;
+}

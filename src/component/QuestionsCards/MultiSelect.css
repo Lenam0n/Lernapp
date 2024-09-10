@@ -1,0 +1,33 @@
+/* Container für die MultiSelect-Optionen */
+.multi-select-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+/* Styling für jede Option (Button) */
+.multi-select-option {
+  background-color: #fff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Stil für ausgewählte Optionen */
+.multi-select-option.selected {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
+
+/* Hover-Effekt für Optionen */
+.multi-select-option:hover {
+  background-color: #e6f0ff;
+  border-color: #0056b3;
+}

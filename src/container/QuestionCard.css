@@ -1,0 +1,112 @@
+/* Container für die gesamte Fragekarte */
+.question-card-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Frage-Header */
+.question-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Antwort-Optionen Container */
+.answer-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Eingabefelder */
+.text-input,
+.graph-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+.text-input:focus,
+.graph-input:focus {
+  border: 1px solid #007bff;
+  outline: none;
+}
+
+/* Buttons */
+.submit-button,
+.answer-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.submit-button:hover,
+.answer-button:hover {
+  background-color: #218838;
+}
+
+/* Richtige und falsche Antworten */
+.correct-answer-message {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+.incorrect-answer-message {
+  color: #dc3545;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+/* Optionen (Multiple Choice, MultiSelect) */
+.option {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.option:hover {
+  background-color: #0056b3;
+}
+
+/* Multiple-Graph Antworten */
+.multiple-graph-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.graph-answer-label {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Graph Container */
+.graph-container {
+  margin-bottom: 20px;
+}

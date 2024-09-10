@@ -1,0 +1,131 @@
+/* Container für die gesamte Seite */
+.question-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hauptüberschrift */
+.question-page-title {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Kategorie- und Subkategorie-Anzeige */
+.category-subcategory-container {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.category-subcategory-container h2 {
+  font-size: 1.4rem;
+  color: #333;
+}
+
+/* Frage-Container */
+.question-card-container {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Frage-Text */
+.question-text {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* Antwortmöglichkeiten */
+.answer-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.answer-option {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.answer-option:hover {
+  background-color: #0056b3;
+}
+
+/* Korrekte oder falsche Antwort */
+.correct-answer {
+  background-color: #28a745;
+}
+
+.wrong-answer {
+  background-color: #dc3545;
+}
+
+/* Nächste Frage Button */
+.next-question-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.next-question-button:hover {
+  background-color: #218838;
+}
+
+/* Review-Bereich */
+.review-section-container {
+  margin-top: 50px;
+}
+
+.review-section-title {
+  font-size: 1.8rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.review-question {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.review-question h3 {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.review-answer {
+  font-size: 1rem;
+  color: #007bff;
+}
+
+/* Lade- und Fehler-Nachrichten */
+.loading-message,
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #999;
+}

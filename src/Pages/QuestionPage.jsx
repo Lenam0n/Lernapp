@@ -1,17 +1,16 @@
-// QuestionPage.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import QuestionCard from "../container/QuestionCard";
 import { ReviewSection } from "../component/ReviewSection";
-
+import Swal from "sweetalert2";
+import "./QuestionPage.css";
 import { useApi } from "../utils/APIprovider";
-import { corr } from "mathjs";
 
 const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
 };
 
-const QuestionPage = ({ category, subCategory }) => {
+const QuestionPage = ({ category, subCategory, selectedList }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [multipleAnswer, setmultipleAnswer] = useState(null);
@@ -22,40 +21,40 @@ const QuestionPage = ({ category, subCategory }) => {
   const [error, setError] = useState(null);
 
   const apiBaseUrl = useApi();
-  const navigate = useNavigate(); // Hook für Navigation
+  const navigate = useNavigate();
 
+  // Fragen basierend auf Kategorie/SubKategorie oder benutzerdefinierter Liste abrufen
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${apiBaseUrl}/questions?category=${category}&subCategory=${subCategory}`
-        );
+        let response;
+
+        if (selectedList) {
+          // API-Aufruf für benutzerdefinierte Liste
+          response = await fetch(`${apiBaseUrl}/custom-list/${selectedList}`);
+        } else {
+          // API-Aufruf für Kategorie und Subkategorie
+          response = await fetch(
+            `${apiBaseUrl}/questions?category=${category}&subCategory=${subCategory}`
+          );
+        }
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+
         const data = await response.json();
 
-        if (
-          !data.some((category) =>
-            category.subCategories.some(
-              (subCategory) => subCategory.questions.length > 0
-            )
-          )
-        ) {
-          alert("Keine Fragen verfügbar für diese Kategorie/Unterkategorie.");
+        if (data.length === 0) {
+          alert("Keine Fragen verfügbar für diese Auswahl.");
           navigate("/categories");
           return;
-        } else {
-          setCurrentQuestion(0);
-          // Extrahiere alle Fragen aus der API-Antwort (data)
-          const allQuestions = data
-            .flatMap((category) => category.subCategories) // Alle Subkategorien extrahieren
-            .flatMap((subCategory) => subCategory.questions); // Alle Fragen aus den Subkategorien extrahieren
-
-          setQuestions(shuffleArray(allQuestions));
-          setLoading(false);
         }
+
+        setCurrentQuestion(0);
+        setQuestions(shuffleArray(data));
+        setLoading(false);
       } catch (error) {
         setError(error.message);
         setLoading(false);
@@ -63,7 +62,7 @@ const QuestionPage = ({ category, subCategory }) => {
     };
 
     fetchQuestions();
-  }, [category, subCategory, apiBaseUrl, navigate]);
+  }, [category, subCategory, selectedList, apiBaseUrl, navigate]);
 
   const handleNextQuestion = () => {
     setCurrentQuestion((prev) => prev + 1);
@@ -78,62 +77,17 @@ const QuestionPage = ({ category, subCategory }) => {
 
     switch (question.type) {
       case "multiple_choice":
-        correct =
-          singleAnswer.trim().toLowerCase() ===
-          question.answer.trim().toLowerCase();
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
-
-        break;
-
       case "text_input":
-        correct =
-          singleAnswer.trim().toLowerCase() ===
-          question.answer.trim().toLowerCase();
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
-        break;
-
       case "true_false":
         correct =
           singleAnswer.trim().toLowerCase() ===
           question.answer.trim().toLowerCase();
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
         break;
-
       case "multiselect":
         correct =
           Array.isArray(multipleAnswer) &&
-          multipleAnswer.every((item) => typeof item === "string") &&
           question.answer.every((answer) => multipleAnswer.includes(answer));
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
         break;
-
-      case "graph":
-        correct =
-          singleAnswer.trim().toLowerCase() ===
-          question.answer.trim().toLowerCase();
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
-        break;
-
       case "multiple_graph_answers":
         correct = question.answer
           .filter(({ label }) =>
@@ -145,52 +99,39 @@ const QuestionPage = ({ category, subCategory }) => {
             );
             return answerEntry && answerEntry[label] === correct_answer;
           });
-        if (!correct) {
-          setIncorrectAnswers((prev) => [...prev, question]);
-        } else {
-          setIsCorrect(correct);
-        }
         break;
-
       default:
-        return;
+        break;
     }
-    handleNextQuestion();
+
+    if (!correct) {
+      setIncorrectAnswers((prev) => [...prev, question]);
+    }
+    setIsCorrect(correct);
+    handleNotification(question.explanation, question.question);
   };
 
   const handleAnswerChange = (answer, label) => {
     if (typeof answer === "string") {
-      // Bei singleAnswer bereits behandelt
       setsingleAnswer(answer);
     } else {
-      // Prüfen, ob multipleAnswer ein Array von Strings ist
       if (
         Array.isArray(multipleAnswer) &&
         multipleAnswer.every((item) => typeof item === "string")
       ) {
-        // Falls es ein Array von Strings ist, füge das neue String-Element hinzu
-        setmultipleAnswer((prevAnswers) => {
-          // Füge den neuen Wert nur hinzu, wenn er noch nicht vorhanden ist
-          if (!prevAnswers.includes(answer)) {
-            return [...prevAnswers, answer];
-          }
-          return prevAnswers; // Keine Änderung, wenn der Wert bereits existiert
-        });
+        setmultipleAnswer((prevAnswers) =>
+          prevAnswers.includes(answer) ? prevAnswers : [...prevAnswers, answer]
+        );
       } else {
-        // Für multipleAnswer: Füge neuen Eintrag hinzu oder aktualisiere bestehenden
         setmultipleAnswer((prevAnswers) => {
-          // Überprüfen, ob bereits ein Objekt mit diesem Label existiert
           const existingAnswerIndex = prevAnswers.findIndex(
             (entry) => entry[label] !== undefined
           );
-
           if (existingAnswerIndex >= 0) {
-            // Existierendes Objekt aktualisieren
             const updatedAnswers = [...prevAnswers];
             updatedAnswers[existingAnswerIndex] = { [label]: answer };
             return updatedAnswers;
           } else {
-            // Neues Objekt hinzufügen
             return [...prevAnswers, { [label]: answer }];
           }
         });
@@ -198,16 +139,39 @@ const QuestionPage = ({ category, subCategory }) => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const handleNotification = (explanation, question) => {
+    const htmlContent = `
+      <h2>Frage:</h2>
+      <h3>${question}</h3>
+      <p>${explanation || "Keine Erklärung verfügbar"}</p>
+    `;
+    Swal.fire({
+      title: "Erklärung",
+      html: htmlContent,
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Nächste Frage",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleNextQuestion();
+      }
+    });
+  };
+
+  if (loading) return <p className="loading-message">Loading...</p>;
+  if (error) return <p className="error-message">Error: {error}</p>;
 
   const question = questions[currentQuestion];
 
   return (
-    <div>
-      <h1>Quiz App</h1>
-      <div>
-        <h2>{`Category: ${category}, SubCategory: ${subCategory}`}</h2>
+    <div className="question-page-container">
+      <h1 className="question-page-title">Quiz App</h1>
+      <div className="category-subcategory-container">
+        <h2>
+          {selectedList
+            ? `Fragen aus Liste: ${selectedList}`
+            : `Category: ${category}, SubCategory: ${subCategory}`}
+        </h2>
       </div>
       {question && (
         <QuestionCard
@@ -225,11 +189,6 @@ const QuestionPage = ({ category, subCategory }) => {
           handleCheckAnswer={handleCheckAnswer}
           handleNextQuestion={handleNextQuestion}
           isCorrect={isCorrect}
-          answerLabel={
-            Array.isArray(question.answers) && question.answers.length > 0
-              ? question.answers.map((answer) => answer.label)
-              : []
-          }
         />
       )}
       {currentQuestion >= questions.length && (

@@ -1,4 +1,5 @@
 import React from "react";
+import "./CategorieButton.css"; // Importiere die CSS-Datei
 
 const CategorieButton = ({
   navigateToQuestions,
@@ -10,6 +11,7 @@ const CategorieButton = ({
 }) => {
   return (
     <button
+      className="categorie-button"
       onClick={() => {
         setCategory(category);
         setSubCategory(subCategory);
@@ -20,4 +22,5 @@ const CategorieButton = ({
     </button>
   );
 };
+
 export default CategorieButton;

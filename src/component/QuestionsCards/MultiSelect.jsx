@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./MultiSelect.css"; // Importiere die CSS-Datei
 
 export const MultiSelect = ({ options, selectedAnswer }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -16,16 +17,14 @@ export const MultiSelect = ({ options, selectedAnswer }) => {
   }, [selectedOptions]);
 
   return (
-    <div>
+    <div className="multi-select-container">
       {options.map((option, index) => (
         <button
           key={index}
           onClick={() => handleOptionClick(option)}
-          style={{
-            backgroundColor: selectedOptions.includes(option)
-              ? "lightblue"
-              : "white",
-          }}
+          className={`multi-select-option ${
+            selectedOptions.includes(option) ? "selected" : ""
+          }`}
         >
           {option}
         </button>

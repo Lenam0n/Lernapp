@@ -1,0 +1,71 @@
+/* Container für die Kategorienseite */
+.categories-page-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header-Container für jede Kategorie */
+.category-header-container {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil für den Kategorie-Header */
+.category-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: left;
+}
+
+/* Button-Container für Subkategorien */
+.subcategory-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+}
+
+/* Subkategorie-Button-Styling */
+.subcategory-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subcategory-button:hover {
+  background-color: #218838;
+}
+
+/* Kein Inhalt vorhanden */
+.no-subtopics {
+  font-size: 1rem;
+  color: #666;
+  margin-left: 15px;
+  padding: 10px;
+}
+
+/* Container für den Ladebildschirm */
+.loading-container {
+  text-align: center;
+  padding: 50px;
+}
+
+/* Container für den Home-Button, wenn keine Fragen vorhanden sind */
+.home-button-container {
+  margin-top: 20px;
+  text-align: center;
+}

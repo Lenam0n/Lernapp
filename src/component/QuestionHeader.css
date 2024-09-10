@@ -1,0 +1,23 @@
+/* Container für den Frage-Header */
+.question-header-container {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil für die Frage (Header) */
+.question-header {
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Optional: Hover-Effekt für zusätzliche Interaktivität */
+.question-header:hover {
+  color: #007bff;
+  transition: color 0.3s ease;
+}

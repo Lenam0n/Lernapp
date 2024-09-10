@@ -1,0 +1,55 @@
+/* Container für die Home-Seite */
+.home-container {
+  padding: 40px;
+  text-align: center;
+  background-color: #f4f4f9;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Überschrift für die Home-Seite */
+.home-container h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Beschreibungstext */
+.home-container p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Container für die Links */
+.home-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Links-Styling */
+.home-link {
+  text-decoration: none;
+}
+
+/* Button-Styling */
+.home-button {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 25px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover-Effekt für Buttons */
+.home-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

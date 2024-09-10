@@ -1,0 +1,8 @@
+/* Styling für den Kategorie-Header */
+.categorie-header {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: left;
+  margin-bottom: 15px;
+  font-weight: 600;
+}

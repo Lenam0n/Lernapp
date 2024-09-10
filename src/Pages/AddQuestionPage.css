@@ -1,232 +1,212 @@
-.multiple-choice-container {
-  font-family: Arial, sans-serif;
-  padding: 20px; /* Hinzugefügt für allgemeineren Abstand */
-}
-
-.multiple-choice-label {
-  font-weight: bold;
-  margin-bottom: 10px; /* Abstand unter dem Label */
-}
-
-.multiple-choice-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Erhöhter Abstand zwischen den Karten */
-}
-
-.multiple-choice-card {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px; /* Erhöhtes Padding für bessere Lesbarkeit */
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leichter Schatten für visuelle Tiefe */
-}
-
-.multiple-choice-option {
-  flex: 1;
-}
-
-.multiple-choice-remove-button {
-  border: none;
-  background-color: #dc3545;
-  color: white;
-  padding: 8px 15px; /* Erhöhtes Padding für besseren Button-Komfort */
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 15px; /* Erhöhter Abstand zum nächsten Element */
-}
-
-.multiple-choice-remove-button:hover {
-  background-color: #c82333;
-}
-
-.multiple-choice-correct-button {
-  border: none;
-  padding: 8px 15px; /* Erhöhtes Padding für besseren Button-Komfort */
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 15px; /* Erhöhter Abstand zum nächsten Element */
-  transition: background-color 0.3s ease;
-}
-
-.multiple-choice-correct-button.correct {
-  background-color: #dc3545; /* Rot für "Nicht als korrekte Antwort" */
-  color: white;
-}
-
-.multiple-choice-correct-button.correct:hover {
-  background-color: #c82333;
-}
-
-.multiple-choice-correct-button.not-correct {
-  background-color: #007bff; /* Blau für "Als korrekte Antwort auswählen" */
-  color: white;
-}
-
-.multiple-choice-correct-button.not-correct:hover {
-  background-color: #0056b3;
-}
-
-.multiple-choice-new-option-input {
-  padding: 10px; /* Erhöhtes Padding für besseres Eingabefeld */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 15px; /* Erhöhter Abstand zum nächsten Element */
-}
-
-.multiple-choice-add-option-button {
-  border: none;
-  padding: 10px 15px; /* Erhöhtes Padding für besseren Button-Komfort */
-  border-radius: 4px;
-  background-color: #28a745;
-  color: white;
-  cursor: pointer;
-}
-
-.multiple-choice-add-option-button:hover {
-  background-color: #218838;
-}
-
-.multiple-choice-correct-answer {
-  margin-top: 20px; /* Erhöhter Abstand zum vorherigen Inhalt */
-}
-
-.multiple-choice-correct-label {
-  font-weight: bold;
-  margin-bottom: 10px; /* Abstand unter dem Label */
-}
-
-.multiple-choice-correct-answer-text {
-  font-size: 16px;
-  padding: 10px; /* Erhöhtes Padding für bessere Lesbarkeit */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
-
-.multiselect-container {
-  font-family: Arial, sans-serif;
+/* Container für die gesamte Seite */
+.add-question-page-container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.multiselect-label {
-  font-weight: bold;
-  margin-bottom: 10px;
+.add-question-page-title {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
-.multiselect-cards {
+.add-question-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+.add-question-form label {
+  font-size: 1rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.add-question-form input[type="text"],
+.add-question-form textarea,
+.add-question-form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border 0.3s ease;
+}
+
+.add-question-form input[type="text"]:focus,
+.add-question-form textarea:focus,
+.add-question-form select:focus {
+  border: 1px solid #007bff;
+  outline: none;
+}
+
+.add-question-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Dynamische Eingabefelder */
+.multiple-choice-container,
+.multiselect-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.multiple-choice-cards,
+.multiselect-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.multiple-choice-card,
 .multiselect-card {
   display: flex;
   align-items: center;
+  background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 48%;
+  justify-content: space-between;
 }
 
+.multiple-choice-card:hover,
+.multiselect-card:hover {
+  border: 1px solid #007bff;
+}
+
+.multiple-choice-option,
 .multiselect-option {
-  flex: 1;
+  font-size: 1rem;
+  color: #333;
 }
 
+.multiple-choice-remove-button,
 .multiselect-remove-button {
-  border: none;
   background-color: #dc3545;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 4px;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
   cursor: pointer;
-  margin-left: 15px;
 }
 
+.multiple-choice-remove-button:hover,
 .multiselect-remove-button:hover {
   background-color: #c82333;
 }
 
+.multiple-choice-correct-button,
 .multiselect-correct-button {
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 15px;
-  transition: background-color 0.3s ease;
-}
-
-.multiselect-correct-button.correct {
-  background-color: #dc3545; /* Rot für "Nicht als korrekte Antwort" */
-  color: white;
-}
-
-.multiselect-correct-button.correct:hover {
-  background-color: #c82333;
-}
-
-.multiselect-correct-button.not-correct {
-  background-color: #007bff; /* Blau für "Als korrekte Antwort auswählen" */
-  color: white;
-}
-
-.multiselect-correct-button.not-correct:hover {
-  background-color: #0056b3;
-}
-
-.multiselect-new-option-input {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 15px;
-}
-
-.multiselect-add-option-button {
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
   background-color: #28a745;
-  color: white;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.multiselect-add-option-button:hover {
+.multiple-choice-correct-button.not-correct,
+.multiselect-correct-button.not-correct {
+  background-color: #007bff;
+}
+
+.multiple-choice-correct-button:hover,
+.multiselect-correct-button:hover {
   background-color: #218838;
 }
 
-.multiselect-correct-answer {
+.multiple-choice-new-option-input,
+.multiselect-new-option-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.multiple-choice-add-option-button,
+.multiselect-add-option-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.multiple-choice-add-option-button:hover,
+.multiselect-add-option-button:hover {
+  background-color: #0056b3;
+}
+
+/* Subfragen-Einstellungen */
+.subquestion-container {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.subquestion-container label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.subquestion-container input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.subquestion-container textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+/* Hinzufügen Button */
+.add-question-submit-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   margin-top: 20px;
 }
 
-.multiselect-correct-label {
+.add-question-submit-button:hover {
+  background-color: #218838;
+}
+
+/* Fehlermeldung */
+.add-question-error-message {
+  color: #dc3545;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.multiselect-correct-answer-list {
-  list-style: none;
-  padding: 0;
-}
-
-.multiselect-correct-answer-item {
-  display: flex;
-  align-items: center;
+.add-question-success-message {
+  color: #28a745;
+  font-weight: bold;
   margin-bottom: 10px;
-}
-
-.multiselect-remove-answer-button {
-  border: none;
-  background-color: #dc3545;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.multiselect-remove-answer-button:hover {
-  background-color: #c82333;
 }

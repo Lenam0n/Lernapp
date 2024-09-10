@@ -1,0 +1,64 @@
+/* Container für die Graph-Komponente */
+.graph-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Fehler-Text, wenn keine Daten vorhanden sind */
+.no-data-message {
+  font-size: 1.2rem;
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+/* Diagramm-Container */
+.chart-wrapper {
+  margin-top: 20px;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Styling für das Diagramm selbst */
+.chartjs-render-monitor {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.axis-label {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Achsen-Anpassungen */
+.line-chart-axis {
+  color: #555;
+  font-weight: 500;
+}
+
+/* Punkte auf der Linie */
+.line-point {
+  background-color: #007bff;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+}
+
+/* Linie */
+.line-graph {
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: stroke 0.3s ease;
+}

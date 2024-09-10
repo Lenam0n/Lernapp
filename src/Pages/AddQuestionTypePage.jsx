@@ -12,7 +12,7 @@ const AddQuestionTypePage = () => {
   const fetchQuestionTypes = async () => {
     try {
       const response = await fetch(`${apiBaseUrl}/question-types`);
-      const data = await response.json(); // "await" hinzufügen
+      const data = await response.json();
       setQuestionTypes(data);
     } catch (error) {
       console.error("Error fetching question types:", error);
@@ -21,7 +21,6 @@ const AddQuestionTypePage = () => {
 
   useEffect(() => {
     if (apiBaseUrl) {
-      console.log("API Base URL:", apiBaseUrl); // Hinzufügen
       fetchQuestionTypes();
     }
   }, [apiBaseUrl]);
@@ -47,7 +46,7 @@ const AddQuestionTypePage = () => {
         setNewType("");
         setNewLabel("");
         alert("Fragetyp erfolgreich hinzugefügt");
-        fetchQuestionTypes(); // Aktualisiere die Liste nach dem Hinzufügen
+        fetchQuestionTypes();
       } else {
         alert("Fehler beim Hinzufügen des Fragetypen");
       }
@@ -57,9 +56,9 @@ const AddQuestionTypePage = () => {
   };
 
   return (
-    <div>
-      <h1>Fragetyp hinzufügen</h1>
-      <form onSubmit={handleAddType}>
+    <div className="add-question-type-page-container">
+      <h1 className="add-question-type-page-title">Fragetyp hinzufügen</h1>
+      <form onSubmit={handleAddType} className="add-question-type-form">
         <div>
           <label>Fragetyp:</label>
           <input
@@ -81,7 +80,9 @@ const AddQuestionTypePage = () => {
           />
         </div>
 
-        <button type="submit">Fragetyp hinzufügen</button>
+        <button type="submit" className="add-question-type-submit-button">
+          Fragetyp hinzufügen
+        </button>
       </form>
 
       <h2>Vorhandene Fragetypen</h2>
@@ -94,7 +95,7 @@ const AddQuestionTypePage = () => {
             </div>
           ))
         ) : (
-          <p>Keine Fragetypen vorhanden.</p>
+          <p className="empty-message">Keine Fragetypen vorhanden.</p>
         )}
       </div>
     </div>

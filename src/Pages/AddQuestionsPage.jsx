@@ -6,15 +6,15 @@ const AddQuestionPage = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [question, setQuestion] = useState("");
-  const [type, setType] = useState(""); // Frage-Typ
+  const [type, setType] = useState("");
   const [options, setOptions] = useState([]);
   const [newOption, setNewOption] = useState("");
   const [answer, setAnswer] = useState([]);
-  const [additionalData, setAdditionalData] = useState(""); // Für zusätzliche Daten
+  const [additionalData, setAdditionalData] = useState("");
   const [questionTypes, setQuestionTypes] = useState([]);
   const [message, setMessage] = useState("");
-  const [error, setError] = useState(""); // Fehlernachricht für die Validierung
-  const [subQuestionCount, setSubQuestionCount] = useState(1); // Anzahl der Subfragen
+  const [error, setError] = useState("");
+  const [subQuestionCount, setSubQuestionCount] = useState(1);
   const [subQuestions, setSubQuestions] = useState([
     { label: "", correct_answer: "", explanation: "" },
   ]);
@@ -42,14 +42,6 @@ const AddQuestionPage = () => {
     setAdditionalData("");
   }, [type]);
 
-  const handleToggleAnswer = (option) => {
-    setAnswer((prev) =>
-      prev.includes(option)
-        ? prev.filter((ans) => ans !== option)
-        : [...prev, option]
-    );
-  };
-
   const handleAddOption = () => {
     if (newOption.trim() === "") {
       alert("Option darf nicht leer sein.");
@@ -63,10 +55,6 @@ const AddQuestionPage = () => {
 
     setOptions((prev) => [...prev, newOption.trim()]);
     setNewOption("");
-  };
-
-  const handleRemoveAnswer = (index) => {
-    setAnswer((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleAddCorrectAnswer = (option) => {
@@ -100,15 +88,6 @@ const AddQuestionPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /*     if (!type) {
-      setError("Bitte wähle einen Fragetyp aus.");
-      return;
-    }
-    if (type === "truefalse" && answer === "") {
-      setError("Bitte wähle entweder True oder false aus");
-      return;
-    } */
-
     const questionData = {
       category,
       subCategory,
@@ -125,8 +104,8 @@ const AddQuestionPage = () => {
               correct_answer: sub.correct_answer,
               explanation: sub.explanation,
             }))
-          : answer[0] || "", // Multiple Answers oder ein einzelner Wert
-      additional_data: additionalData !== "" ? additionalData : "", // Hier fügen wir die zusätzlichen Daten hinzu
+          : answer[0] || "",
+      additional_data: additionalData !== "" ? additionalData : "",
     };
 
     try {
@@ -140,8 +119,7 @@ const AddQuestionPage = () => {
 
       if (response.ok) {
         setMessage("Frage erfolgreich hinzugefügt");
-        setError(""); // Fehlernachricht zurücksetzen
-        // Formular leeren
+        setError("");
         setCategory("");
         setSubCategory("");
         setQuestion("");
@@ -160,7 +138,6 @@ const AddQuestionPage = () => {
     }
   };
 
-  // Dynamisches Formular basierend auf dem Fragetyp
   const renderQuestionFields = () => {
     switch (type) {
       case "multiple_choice":
@@ -255,7 +232,6 @@ const AddQuestionPage = () => {
             </button>
           </div>
         );
-
       case "multiple_graph_answers":
         return (
           <div>
@@ -266,9 +242,9 @@ const AddQuestionPage = () => {
                 onChange={(e) => setAdditionalData(e.target.value)}
                 placeholder="Funktion des Graphes"
                 required
+                className="graph-answer-input"
               />
             </div>
-
             <div>
               <label>Anzahl der Subfragen:</label>
               <input
@@ -290,10 +266,11 @@ const AddQuestionPage = () => {
                     )
                   );
                 }}
+                className="subquestion-range-input"
               />
               <span>{subQuestionCount}</span>
             </div>
-            <div>
+            <div className="subquestion-container">
               {subQuestions.map((sub, index) => (
                 <div key={index}>
                   <h4>Subfrage {index + 1}</h4>
@@ -349,6 +326,7 @@ const AddQuestionPage = () => {
               onChange={(e) => setAdditionalData(e.target.value)}
               placeholder="z.B. f(x) = sin(x)"
               required
+              className="graph-equation-input"
             />
             <label>Erwartete Antwort:</label>
             <textarea
@@ -356,6 +334,7 @@ const AddQuestionPage = () => {
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Erwartete Antwort"
               required
+              className="graph-answer-input"
             />
           </div>
         );
@@ -368,6 +347,7 @@ const AddQuestionPage = () => {
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Erwartete Antwort"
               required
+              className="text-answer-input"
             />
           </div>
         );
@@ -379,6 +359,7 @@ const AddQuestionPage = () => {
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               required
+              className="true-false-select"
             >
               <option value="">Wahr/Falsch wählen</option>
               <option value="true">Wahr</option>
@@ -392,11 +373,11 @@ const AddQuestionPage = () => {
   };
 
   return (
-    <div>
-      <h1>Frage hinzufügen</h1>
-      {message && <p>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="add-question-page-container">
+      <h1 className="add-question-page-title">Frage hinzufügen</h1>
+      {message && <p className="add-question-success-message">{message}</p>}
+      {error && <p className="add-question-error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="add-question-form">
         <div>
           <label>Kategorie:</label>
           <input
@@ -433,7 +414,7 @@ const AddQuestionPage = () => {
             value={type}
             onChange={(e) => {
               setType(e.target.value);
-              setError(""); // Fehlernachricht zurücksetzen, wenn eine Auswahl getroffen wurde
+              setError("");
             }}
           >
             <option value="">Fragetyp wählen</option>
@@ -445,10 +426,11 @@ const AddQuestionPage = () => {
           </select>
         </div>
 
-        {/* Dynamische Frage-Eingabefelder basierend auf dem Fragetyp */}
         {renderQuestionFields()}
 
-        <button type="submit">Frage hinzufügen</button>
+        <button type="submit" className="add-question-submit-button">
+          Frage hinzufügen
+        </button>
       </form>
     </div>
   );

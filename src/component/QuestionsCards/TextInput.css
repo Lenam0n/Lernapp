@@ -1,0 +1,30 @@
+/* Container für TextInput */
+.text-input-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Eingabefeld */
+.text-input-field {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Fokuseffekt für das Eingabefeld */
+.text-input-field:focus {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+  outline: none;
+}
+
+/* Platzhaltertext */
+.text-input-field::placeholder {
+  color: #999;
+  font-style: italic;
+}

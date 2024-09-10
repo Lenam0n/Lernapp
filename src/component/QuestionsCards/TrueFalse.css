@@ -1,0 +1,41 @@
+/* Container für die True/False-Buttons */
+.true-false-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* Button-Styling für True/False */
+.true-false-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* True-Button */
+.true-button {
+  background-color: #28a745;
+  color: white;
+  border-color: #218838;
+}
+
+.true-button:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* False-Button */
+.false-button {
+  background-color: #dc3545;
+  color: white;
+  border-color: #c82333;
+}
+
+.false-button:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}

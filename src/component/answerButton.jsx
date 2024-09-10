@@ -1,11 +1,12 @@
 import React from "react";
+import "./AnswerButton.css"; // Importiere die CSS-Datei
 
-const awnserButton = ({ onClick }) => {
+const AnswerButton = ({ onClick }) => {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className="answer-button">
       Nächste Frage
     </button>
   );
 };
 
-export default awnserButton;
+export default AnswerButton;

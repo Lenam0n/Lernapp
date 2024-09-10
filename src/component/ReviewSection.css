@@ -1,0 +1,59 @@
+/* Container für den Review-Bereich */
+.review-section-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Überschrift für den Überprüfungsbereich */
+.review-section-title {
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Liste der falschen Antworten */
+.incorrect-answer-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+/* Einzelne falsche Antwort (Listelement) */
+.incorrect-answer-item {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Frage-Text */
+.question-text {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+/* Korrekte Antwort und Erklärung */
+.correct-answer,
+.explanation {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Gratulationstext */
+.congratulations-text {
+  font-size: 1.5rem;
+  color: #28a745;
+  text-align: center;
+  margin-bottom: 20px;
+}
