@@ -24,7 +24,9 @@ const AddQuestionPage = () => {
   useEffect(() => {
     const fetchQuestionTypes = async () => {
       try {
-        const response = await fetch(`${apiBaseUrl}/question-types`);
+        const response = await fetch(
+          `${apiBaseUrl}/question-types/question-types`
+        );
         const data = await response.json();
         setQuestionTypes(data);
       } catch (error) {
@@ -109,7 +111,7 @@ const AddQuestionPage = () => {
     };
 
     try {
-      const response = await fetch(`${apiBaseUrl}/questions-add`, {
+      const response = await fetch(`${apiBaseUrl}/questions/questions-add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

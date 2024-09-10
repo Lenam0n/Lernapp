@@ -36,7 +36,7 @@ const QuestionPage = ({ category, subCategory, selectedList }) => {
         } else {
           // API-Aufruf für Kategorie und Subkategorie
           response = await fetch(
-            `${apiBaseUrl}/questions?category=${category}&subCategory=${subCategory}`
+            `${apiBaseUrl}/categories/questions?category=${category}&subCategory=${subCategory}`
           );
         }
 

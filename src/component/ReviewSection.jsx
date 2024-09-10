@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import HomeButton from "./HomeButton.jsx";
+import HomeButton from "./HomeButton";
 import "./ReviewSection.css"; // Importiere die CSS-Datei
 
 // Überprüfungsbereich-Komponente

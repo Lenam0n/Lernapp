@@ -11,7 +11,9 @@ const AddQuestionTypePage = () => {
 
   const fetchQuestionTypes = async () => {
     try {
-      const response = await fetch(`${apiBaseUrl}/question-types`);
+      const response = await fetch(
+        `${apiBaseUrl}/question-types/question-types`
+      );
       const data = await response.json();
       setQuestionTypes(data);
     } catch (error) {
@@ -34,13 +36,16 @@ const AddQuestionTypePage = () => {
     };
 
     try {
-      const response = await fetch(`${apiBaseUrl}/question-types-add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newQuestionType),
-      });
+      const response = await fetch(
+        `${apiBaseUrl}/question-types/question-types-add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newQuestionType),
+        }
+      );
 
       if (response.ok) {
         setNewType("");

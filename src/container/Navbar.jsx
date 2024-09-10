@@ -48,7 +48,7 @@ const Navbar = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${apiBaseUrl}/categories`, {
+      const response = await axios.get(`${apiBaseUrl}/categories/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCategories(response.data);
@@ -62,9 +62,12 @@ const Navbar = () => {
 
   const fetchCustomLists = async () => {
     try {
-      const response = await axios.get(`${apiBaseUrl}/user-playlists`, {
-        headers: { Authorization: `Bearer ${token}` }, // Füge das Token im Header hinzu
-      });
+      const response = await axios.get(
+        `${apiBaseUrl}/playlists/user-playlists`,
+        {
+          headers: { Authorization: `Bearer ${token}` }, // Füge das Token im Header hinzu
+        }
+      );
       setCustomLists(response.data);
     } catch (error) {
       console.error("Fehler beim Abrufen der Playlists:", error);
@@ -93,7 +96,7 @@ const Navbar = () => {
 
     if (newListName) {
       try {
-        await axios.post(`${apiBaseUrl}/user-playlists/new`, {
+        await axios.post(`${apiBaseUrl}/playlists/user-playlists/new`, {
           name: newListName,
         });
         fetchCustomLists(); // Aktualisiere die Playlists nach dem Hinzufügen der neuen Liste

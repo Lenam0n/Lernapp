@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CategorieButton from "../component/CategorieButton.jsx";
+import CategorieButton from "../component/CategorieButton";
 import CategorieHeader from "../component/CategorieHeader";
 import Loading from "../component/Loading";
 import NoQuestions from "../component/NoQuestions";
@@ -20,7 +20,7 @@ const CategoriesPage = ({ setCategory, setSubCategory }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${apiBaseUrl}/categories`);
+      const response = await fetch(`${apiBaseUrl}/categories/categories`);
       const result = await response.json();
 
       if (result.message === "Keine Kategorien gefunden") {

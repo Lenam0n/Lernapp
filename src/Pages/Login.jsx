@@ -46,7 +46,7 @@ const Login = () => {
   const handleGoogleLoginSuccess = async (response) => {
     try {
       const { credential } = response;
-      const res = await axios.post(`${apiBaseUrl}/google-login`, {
+      const res = await axios.post(`${apiBaseUrl}/auth/google-login`, {
         tokenId: credential,
       });
       localStorage.setItem("token", res.data.token);
