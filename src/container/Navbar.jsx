@@ -15,6 +15,8 @@ import {
 } from "react-icons/fa"; // Icons importieren
 import "./Navbar.css"; // CSS-Datei importieren
 import { useApi } from "../utils/APIprovider";
+import Cookies from "js-cookie"; // Cookies importieren
+import { useUser } from "../utils/UserProvider";
 
 const icons = {
   home: <FaHome className="icon" />,
@@ -28,7 +30,7 @@ const icons = {
   newList: <FaPlus className="icon" />, // Icon für Neue Liste erstellen
 };
 
-const Navbar = () => {
+const Navbar = ({ setCategory, setSubCategory }) => {
   const [categories, setCategories] = useState([]);
   const [customLists, setCustomLists] = useState([]); // Custom Listen hinzufügen
   const [showCustomLists, setShowCustomLists] = useState(false); // Für Custom Listen Dropdown
@@ -37,6 +39,7 @@ const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const apiBaseUrl = useApi();
+  const { logout } = useUser();
 
   // Kategorien und Playlists abrufen
   useEffect(() => {
@@ -44,11 +47,11 @@ const Navbar = () => {
     fetchCustomLists();
   }, []);
 
-  const token = localStorage.getItem("token"); // Hole das Token aus dem Local Storage
+  const token = Cookies.get("token"); // Hole das Token aus den Cookies
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${apiBaseUrl}/categories/categories`, {
+      const response = await axios.get(`${apiBaseUrl}/questions/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCategories(response.data);
@@ -62,12 +65,9 @@ const Navbar = () => {
 
   const fetchCustomLists = async () => {
     try {
-      const response = await axios.get(
-        `${apiBaseUrl}/playlists/user-playlists`,
-        {
-          headers: { Authorization: `Bearer ${token}` }, // Füge das Token im Header hinzu
-        }
-      );
+      const response = await axios.get(`${apiBaseUrl}/playlists`, {
+        headers: { Authorization: `Bearer ${token}` }, // Füge das Token im Header hinzu
+      });
       setCustomLists(response.data);
     } catch (error) {
       console.error("Fehler beim Abrufen der Playlists:", error);
@@ -96,7 +96,7 @@ const Navbar = () => {
 
     if (newListName) {
       try {
-        await axios.post(`${apiBaseUrl}/playlists/user-playlists/new`, {
+        await axios.post(`${apiBaseUrl}/playlists/new`, {
           name: newListName,
         });
         fetchCustomLists(); // Aktualisiere die Playlists nach dem Hinzufügen der neuen Liste
@@ -117,12 +117,9 @@ const Navbar = () => {
   };
 
   const handleCategoryClick = (category, subCategory) => {
+    setCategory(category);
+    setSubCategory(subCategory);
     navigate(`/questions?category=${category}&subCategory=${subCategory}`);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
   };
 
   return (
@@ -163,7 +160,24 @@ const Navbar = () => {
         <li
           className="categories-dropdown"
           onMouseEnter={() => setShowCategories(true)}
-          onMouseLeave={() => setShowCategories(false)}
+          onMouseLeave={() => {
+            const categoriesMenu =
+              document.getElementsByClassName("categories-menu")[0];
+            const subDropdown =
+              document.getElementsByClassName("sub-dropdown")[0];
+            const categoriesDropdown = document.getElementsByClassName(
+              "categories-dropdown"
+            )[0];
+            // Prüfe, ob `categoriesMenu` oder `subDropdown` noch innerhalb von `categoriesDropdown` sind.
+            if (
+              !(
+                categoriesDropdown.contains(categoriesMenu) ||
+                categoriesDropdown.contains(subDropdown)
+              )
+            ) {
+              setShowCategories(false);
+            }
+          }}
         >
           <Link to="#">
             {icons.questions}
@@ -176,10 +190,28 @@ const Navbar = () => {
                 <div
                   key={category.category}
                   onMouseEnter={() => setHoveredCategory(category.category)}
-                  onMouseLeave={() => setHoveredCategory(null)}
+                  onMouseLeave={() => {
+                    const categoriesMenu =
+                      document.getElementsByClassName("categories-menu")[0];
+                    const subDropdown =
+                      document.getElementsByClassName("sub-dropdown")[0];
+                    const categoriesDropdown = document.getElementsByClassName(
+                      "categories-dropdown"
+                    )[0];
+                    if (
+                      !(
+                        categoriesDropdown.contains(categoriesMenu) ||
+                        categoriesDropdown.contains(subDropdown)
+                      )
+                    ) {
+                      setShowCategories(false);
+                    }
+                  }}
                   className="category-item"
                 >
-                  <span className="category-title">{category.category}</span>
+                  <span className="category-navbar-title">
+                    {category.category}
+                  </span>
                   {hoveredCategory === category.category && (
                     <div className="sub-dropdown">
                       {category.subCategories.map((subCategory) => (
@@ -256,7 +288,14 @@ const Navbar = () => {
         </li>
 
         <li>
-          <Link to="#" className="logout-button" onClick={logout}>
+          <Link
+            to="#"
+            className="logout-button"
+            onClick={() => {
+              logout();
+              window.location.href = "/login";
+            }}
+          >
             {icons.logout}
             {isExpanded && <span>Logout</span>}
           </Link>

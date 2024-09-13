@@ -6,13 +6,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useUser(); // Hole den Benutzer aus dem Context
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/");
-    }
-  }, [navigate]);
-
   return (
     <div>
       <h2>Dashboard</h2>

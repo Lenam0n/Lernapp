@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useApi } from "../utils/APIprovider";
 import "./AddQuestionPage.css";
+import axios from "axios";
 
 const AddQuestionPage = () => {
   const [category, setCategory] = useState("");
@@ -24,9 +25,7 @@ const AddQuestionPage = () => {
   useEffect(() => {
     const fetchQuestionTypes = async () => {
       try {
-        const response = await fetch(
-          `${apiBaseUrl}/question-types/question-types`
-        );
+        const response = await axios.get(`${apiBaseUrl}/types`);
         const data = await response.json();
         setQuestionTypes(data);
       } catch (error) {
@@ -111,13 +110,15 @@ const AddQuestionPage = () => {
     };
 
     try {
-      const response = await fetch(`${apiBaseUrl}/questions/questions-add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(questionData),
-      });
+      const response = await axios.post(
+        `${apiBaseUrl}/questions/add`,
+        questionData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         setMessage("Frage erfolgreich hinzugefügt");

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddQuestionTypePage.css";
 import { useApi } from "../utils/APIprovider";
+import axios from "axios";
 
 const AddQuestionTypePage = () => {
   const [questionTypes, setQuestionTypes] = useState([]);
@@ -11,9 +12,7 @@ const AddQuestionTypePage = () => {
 
   const fetchQuestionTypes = async () => {
     try {
-      const response = await fetch(
-        `${apiBaseUrl}/question-types/question-types`
-      );
+      const response = await axios.get(`${apiBaseUrl}/types`);
       const data = await response.json();
       setQuestionTypes(data);
     } catch (error) {
@@ -36,14 +35,13 @@ const AddQuestionTypePage = () => {
     };
 
     try {
-      const response = await fetch(
-        `${apiBaseUrl}/question-types/question-types-add`,
+      const response = await axios.post(
+        `${apiBaseUrl}/types/add`,
+        newQuestionType,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newQuestionType),
         }
       );
 
