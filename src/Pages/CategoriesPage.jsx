@@ -9,6 +9,7 @@ import HomeButton from "../component/HomeButton";
 import "./CategoriesPage.css"; // Importiere die CSS-Datei
 
 import { useApi } from "../utils/APIprovider";
+import axios from "axios";
 
 const CategoriesPage = ({ setCategory, setSubCategory }) => {
   const [allCategories, setAllCategories] = useState([]);
@@ -20,8 +21,8 @@ const CategoriesPage = ({ setCategory, setSubCategory }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${apiBaseUrl}/categories/categories`);
-      const result = await response.json();
+      const response = await axios.get(`${apiBaseUrl}/questions/categories`);
+      const result = await response.data;
 
       if (result.message === "Keine Kategorien gefunden") {
         setHasCategories(false);

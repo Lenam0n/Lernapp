@@ -5,6 +5,7 @@ import { ReviewSection } from "../component/ReviewSection";
 import Swal from "sweetalert2";
 import "./QuestionPage.css";
 import { useApi } from "../utils/APIprovider";
+import axios from "axios";
 
 const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
@@ -32,11 +33,13 @@ const QuestionPage = ({ category, subCategory, selectedList }) => {
 
         if (selectedList) {
           // API-Aufruf für benutzerdefinierte Liste
-          response = await fetch(`${apiBaseUrl}/custom-list/${selectedList}`);
+          response = await axios.get(
+            `${apiBaseUrl}/custom-list/${selectedList}`
+          );
         } else {
           // API-Aufruf für Kategorie und Subkategorie
-          response = await fetch(
-            `${apiBaseUrl}/categories/questions?category=${category}&subCategory=${subCategory}`
+          response = await axios.get(
+            `${apiBaseUrl}/questions?category=${category}&subCategory=${subCategory}`
           );
         }
 

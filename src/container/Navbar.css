@@ -31,6 +31,7 @@
   margin-bottom: 20px;
   position: relative;
 }
+
 .navbar-list li:hover {
   background-color: #1c2d3f;
 }
@@ -46,7 +47,7 @@
 .navbar-list a {
   color: white;
   text-decoration: none;
-  font-size: 16px; /* Kleinere Schriftgröße für Navbar-Links */
+  font-size: 16px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -54,7 +55,7 @@
 }
 
 .navbar-list.expanded a {
-  opacity: 1; /* Text einblenden, wenn Navbar erweitert ist */
+  opacity: 1;
 }
 
 .navbar-list a:hover {
@@ -66,21 +67,21 @@
 .custom-lists-menu {
   position: absolute;
   top: 0;
-  left: 100%; /* Das Dropdown erscheint rechts vom "Custom Listen"-Eintrag */
+  left: 100%;
   width: 140px;
   background-color: #f0f0f0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schlagschatten für Custom Listen */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 8px;
-  z-index: 100; /* Sicherstellen, dass das Dropdown über anderen Elementen liegt */
+  z-index: 100;
   opacity: 0;
   transform: translateX(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .custom-lists-dropdown:hover .custom-lists-menu {
-  opacity: 1; /* Einblenden der Custom Lists bei Hover */
-  transform: translateX(0); /* Animiert das Dropdown-Menü von links */
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .custom-list-item {
@@ -92,7 +93,75 @@
 }
 
 .custom-list-item:hover {
-  background-color: #e0e0e0; /* Hover-Hintergrund für Custom Listen */
+  background-color: #e0e0e0;
+  color: #2481e4;
+}
+
+/* Kategorien Menu Styling */
+.categories-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 140px;
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 8px;
+  z-index: 100;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.categories-dropdown:hover .categories-menu {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.category-item {
+  color: #2481e4;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.category-item:hover {
+  background-color: #e0e0e0;
+  color: #2481e4;
+}
+
+/* Subkategorien Dropdown */
+.sub-dropdown {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 140px;
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 8px;
+  z-index: 200;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.category-item:hover .sub-dropdown {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sub-dropdown-item {
+  color: #000000;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.sub-dropdown-item:hover {
+  background-color: #e0e0e0;
   color: #2481e4;
 }
 
@@ -101,14 +170,20 @@
   background-color: transparent;
   border: none;
   color: white;
-  font-size: 16px; /* Kleinere Schriftgröße für den Logout-Button */
+  font-size: 16px;
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 10px;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .logout-button:hover {
   background-color: #1c2d3f;
+}
+
+.category-navbar-title {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
 }

@@ -6,6 +6,7 @@ import Swal from "sweetalert2"; // Importiere SweetAlert2
 import "./Login.css"; // Importiere die CSS-Datei
 import { useApi } from "../utils/APIprovider";
 import { useUser } from "../utils/UserProvider"; // Importiere den UserContext
+import Cookies from "js-cookie"; // Importiere js-cookie
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -16,48 +17,35 @@ const Login = () => {
 
   // Funktion für den normalen Login
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Verhindere das Standardverhalten des Formular-Submits
     try {
       const response = await axios.post(`${apiBaseUrl}/auth/login`, {
         identifier,
         password,
       });
+      //console.log("Login response:", response); // Für Debugging
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-
+        // Setze das Token in den Cookies
+        Cookies.set("token", response.data.token, {
+          expires: 1, // Das Token läuft nach 1 Tag ab
+          //secure: true, // Stelle sicher, dass der Cookie nur über HTTPS gesendet wird
+          sameSite: "Strict", // Cross-Site-Anfragen verhindern
+        });
         // Setze den Benutzer im Kontext (userId und name)
         login(response.data.userId, response.data.name);
-
         // Navigiere zum Dashboard
         navigate("/dashboard");
       }
     } catch (error) {
+      console.log("Fehler beim Login:", error); // Für Debugging
+
       // Zeige SweetAlert bei Fehler
       Swal.fire({
         icon: "error",
-        title: "Login failed",
-        text: "Invalid credentials. Please try again.",
+        title: "Login fehlgeschlagen",
+        text: "Ungültige Anmeldeinformationen. Bitte versuche es erneut.",
         confirmButtonText: "Ok",
       });
-    }
-  };
-
-  // Funktion für den Google-Login
-  const handleGoogleLoginSuccess = async (response) => {
-    try {
-      const { credential } = response;
-      const res = await axios.post(`${apiBaseUrl}/auth/google-login`, {
-        tokenId: credential,
-      });
-      localStorage.setItem("token", res.data.token);
-
-      // Setze den Benutzer im Kontext für Google Login (userId und name)
-      login(res.data.userId, res.data.name);
-
-      // Navigiere zum Dashboard nach erfolgreichem Google Login
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Google login failed:", error);
     }
   };
 
@@ -88,14 +76,14 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
 
-      {/* Google Login */}
+      {/* Google Login
       <div className="google-login-section">
-        <h3>Or login with Google</h3>
+        <h3>Oder mit Google anmelden</h3>
         <GoogleLogin
           onSuccess={handleGoogleLoginSuccess}
           onError={() => console.error("Google login error")}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

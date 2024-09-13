@@ -13,9 +13,7 @@ const QuestionsOverview = () => {
   // Fragen aus dem Backend abrufen
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(
-        `${apiBaseUrl}/categories/questions-overview`
-      );
+      const response = await axios.get(`${apiBaseUrl}/questions/overview`);
       if (response.data.length === 0) {
         setHasQuestions(false);
       } else {

@@ -3,11 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import axios from "axios";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserProvider } from "./utils/UserProvider"; // Importiere den UserProvider
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+// Setze global withCredentials, damit Cookies bei jedem Request mitgeschickt werden
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
