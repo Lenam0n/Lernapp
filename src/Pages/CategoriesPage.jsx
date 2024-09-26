@@ -11,7 +11,7 @@ import "./CategoriesPage.css"; // Importiere die CSS-Datei
 import { useApi } from "../utils/APIprovider";
 import axios from "axios";
 
-const CategoriesPage = ({ setCategory, setSubCategory }) => {
+const CategoriesPage = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasCategories, setHasCategories] = useState(true);
@@ -22,12 +22,12 @@ const CategoriesPage = ({ setCategory, setSubCategory }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${apiBaseUrl}/questions/categories`);
-      const result = await response.data;
+      const result = await response;
 
-      if (result.message === "Keine Kategorien gefunden") {
+      if (result.status !== 200) {
         setHasCategories(false);
       } else {
-        setAllCategories(result);
+        setAllCategories(result.data);
         setHasCategories(true);
       }
 
@@ -43,8 +43,8 @@ const CategoriesPage = ({ setCategory, setSubCategory }) => {
     fetchCategories();
   }, []);
 
-  const navigateToQuestions = () => {
-    navigate(`/questions`);
+  const navigateToQuestions = (category, subCategory) => {
+    navigate(`/questions/${category}/${subCategory}`);
   };
 
   return (
@@ -70,8 +70,6 @@ const CategoriesPage = ({ setCategory, setSubCategory }) => {
                       name={subCategory}
                       category={category}
                       subCategory={subCategory}
-                      setSubCategory={setSubCategory}
-                      setCategory={setCategory}
                       navigateToQuestions={navigateToQuestions}
                     />
                   ))}

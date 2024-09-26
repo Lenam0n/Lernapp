@@ -15,7 +15,7 @@ import "./Graph.css"; // Importiere die CSS-Datei
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title);
 
 // Eine generische Komponente für verschiedene Funktionstypen
-export const Graph = ({ additionalData, correctAnswer }) => {
+export const Graph = ({ additionalData }) => {
   if (!additionalData) {
     return <p className="no-data-message">Keine Funktionsdaten vorhanden</p>;
   }

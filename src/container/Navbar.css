@@ -123,7 +123,6 @@
   text-decoration: none;
   padding: 8px;
   font-size: 0.9rem;
-  cursor: pointer;
 }
 
 .category-item:hover {
@@ -158,6 +157,8 @@
   padding: 8px;
   font-size: 0.9rem;
   cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
 .sub-dropdown-item:hover {
@@ -186,4 +187,11 @@
   font-size: 1rem;
   margin-bottom: 10px;
   color: #333;
+}
+.custom-lists-dropdown a {
+  color: #333;
+}
+.Navbar-Icon > a,
+.Navbar-Icon > svg {
+  color: whitesmoke;
 }

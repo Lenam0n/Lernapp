@@ -1,0 +1,37 @@
+.account-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.account-info,
+.account-progress,
+.account-settings {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.account-info h2,
+.account-progress h2,
+.account-settings h2 {
+  margin-top: 0;
+}
+
+.account-info p,
+.account-progress p,
+.account-settings p {
+  margin: 10px 0;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

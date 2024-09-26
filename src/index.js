@@ -7,6 +7,7 @@ import axios from "axios";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserProvider } from "./utils/UserProvider"; // Importiere den UserProvider
+import { ApiProvider } from "./utils/APIprovider";
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -17,9 +18,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={clientId}>
-      <UserProvider>
-        <App />
-      </UserProvider>
+      <ApiProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </ApiProvider>
     </GoogleOAuthProvider>
   </React.StrictMode>
 );

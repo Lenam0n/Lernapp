@@ -13,7 +13,7 @@ const AddQuestionTypePage = () => {
   const fetchQuestionTypes = async () => {
     try {
       const response = await axios.get(`${apiBaseUrl}/types`);
-      const data = await response.json();
+      const data = await response.data;
       setQuestionTypes(data);
     } catch (error) {
       console.error("Error fetching question types:", error);

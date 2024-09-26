@@ -5,14 +5,17 @@
   font-family: Arial, sans-serif;
 }
 
-/* Main Content Styling */
-.main-content {
-  margin-left: 60px; /* Platz für die eingeklappte Navbar */
-  flex: 1; /* Hauptinhalt nimmt den verbleibenden Platz ein */
-  padding: 20px;
-  transition: margin-left 0.3s ease; /* Transition für das Verschieben der Inhalte */
+.full-width .main-content {
+  margin-left: 0; /* Volle Breite für nicht eingeloggt */
+  width: 100%; /* Nimmt die gesamte Breite ein */
 }
 
-.custom-navbar.expanded ~ .main-content {
-  margin-left: 200px; /* Platz für die ausgeklappte Navbar */
+.with-sidebar .main-content {
+  margin-left: 60px; /* Platz für eingeklappte Navbar */
+  flex: 1; /* Hauptinhalt nimmt den verbleibenden Platz ein */
+  transition: margin-left 0.3s ease; /* Smooth transition */
+}
+
+.with-sidebar .custom-navbar.expanded ~ .main-content {
+  margin-left: 200px; /* Platz für ausgeklappte Navbar */
 }
