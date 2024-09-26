@@ -13,6 +13,7 @@ import {
   FaClipboardList, // Icon für Custom Listen
   FaPlus, // Icon für Neue Liste erstellen
 } from "react-icons/fa"; // Icons importieren
+import { RiFunctionAddFill, RiFunctionAddLine } from "react-icons/ri";
 import "./Navbar.css"; // CSS-Datei importieren
 import { useApi } from "../utils/APIprovider";
 import Cookies from "js-cookie"; // Cookies importieren
@@ -28,6 +29,8 @@ const icons = {
   examRelevant: <FaListAlt className="icon" />, // Prüfungsrelevant Icon
   customLists: <FaClipboardList className="icon" />, // Custom Listen Icon
   newList: <FaPlus className="icon" />, // Icon für Neue Liste erstellen
+  addQuestion: <RiFunctionAddFill className="icon" />,
+  addType: <RiFunctionAddLine className="icon" />,
 };
 
 const Navbar = () => {
@@ -236,7 +239,6 @@ const Navbar = () => {
               </div>
             )}
           </li>
-
           {/* Custom Listen Dropdown */}
           <li
             className="custom-lists-dropdown Navbar-Icon"
@@ -274,6 +276,19 @@ const Navbar = () => {
                 </Link>
               </div>
             )}
+          </li>
+
+          <li>
+            <Link to="/add-question">
+              {icons.addQuestion}
+              {isExpanded && <span>Add Question</span>}
+            </Link>
+          </li>
+          <li>
+            <Link to="/add-type">
+              {icons.addType}
+              {isExpanded && <span>Add Question Type</span>}
+            </Link>
           </li>
 
           <li className="Navbar-Icon">

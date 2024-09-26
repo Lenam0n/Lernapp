@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "../utils/APIprovider";
 import "./AddQuestionPage.css";
 import axios from "axios";
+import { useUser } from "../utils/UserProvider";
 
 const AddQuestionPage = () => {
   const [category, setCategory] = useState("");
@@ -19,6 +20,7 @@ const AddQuestionPage = () => {
   const [subQuestions, setSubQuestions] = useState([]);
 
   const apiBaseUrl = useApi();
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchQuestionTypes = async () => {
@@ -86,6 +88,7 @@ const AddQuestionPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(user);
 
     const questionData = {
       category,
@@ -105,6 +108,7 @@ const AddQuestionPage = () => {
             }))
           : answer || "",
       additional_data: additionalData !== "" ? additionalData : "",
+      userID: user.userId,
     };
 
     try {
@@ -117,8 +121,8 @@ const AddQuestionPage = () => {
           },
         }
       );
-
-      if (response.ok) {
+      console.log(response);
+      if (response.status === 200 || response.status === 201) {
         setMessage("Frage erfolgreich hinzugefügt");
         setError("");
         setCategory("");
