@@ -1,0 +1,167 @@
+.footer-container {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.footer-section {
+  margin: 10px;
+  flex: 1;
+}
+
+.footer-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f1f1f1;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #b3b3b3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+.footer-contact {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.footer-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  color: #f1f1f1;
+}
+
+.footer-contact a {
+  color: #b3b3b3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: #ffffff;
+}
+
+/* Neue Stile für Discord- und Kontakt-Sektionen */
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.footer-contact-item:hover {
+  cursor: pointer;
+}
+
+/* Transition-Effekte für Discord und Email Links */
+.footer-contact-item a {
+  color: #b3b3b3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact-item a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Link Styles für den Discord Invite */
+.footer-contact-item-discord {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.footer-contact-item-discord a {
+  color: #7289da; /* Discord-Farbschema */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact-item-discord a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Responsives Design für kleinere Bildschirme */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .footer-contact li {
+    justify-content: center;
+  }
+}
+.copy-indicator {
+  position: absolute;
+  top: -30px; /* Positioniere den Text oberhalb */
+  left: 0;
+  background-color: #4caf50; /* Grüne Hintergrundfarbe */
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1;
+  opacity: 0;
+  animation: slideDown 0.8s forwards, fadeOut 2.5s forwards 0.8s; /* Slide-in und Fade-out Animation */
+}
+
+/* Slide-down Animation */
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade-out Animation */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

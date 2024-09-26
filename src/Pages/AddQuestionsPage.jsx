@@ -16,9 +16,7 @@ const AddQuestionPage = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [subQuestionCount, setSubQuestionCount] = useState(1);
-  const [subQuestions, setSubQuestions] = useState([
-    { label: "", correct_answer: "", explanation: "" },
-  ]);
+  const [subQuestions, setSubQuestions] = useState([]);
 
   const apiBaseUrl = useApi();
 
@@ -26,7 +24,7 @@ const AddQuestionPage = () => {
     const fetchQuestionTypes = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/types`);
-        const data = await response.json();
+        const data = await response.data;
         setQuestionTypes(data);
       } catch (error) {
         console.error("Error fetching question types:", error);
@@ -105,7 +103,7 @@ const AddQuestionPage = () => {
               correct_answer: sub.correct_answer,
               explanation: sub.explanation,
             }))
-          : answer[0] || "",
+          : answer || "",
       additional_data: additionalData !== "" ? additionalData : "",
     };
 
@@ -131,7 +129,7 @@ const AddQuestionPage = () => {
         setAdditionalData("");
         setType("");
         setSubQuestionCount(1);
-        setSubQuestions([{ label: "", correct_answer: "", explanation: "" }]);
+        setSubQuestions([]);
       } else {
         setMessage("Fehler beim Hinzufügen der Frage");
       }

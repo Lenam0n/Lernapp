@@ -32,6 +32,7 @@ const Login = () => {
           sameSite: "Strict", // Cross-Site-Anfragen verhindern
         });
         // Setze den Benutzer im Kontext (userId und name)
+
         login(response.data.userId, response.data.name);
         // Navigiere zum Dashboard
         navigate("/dashboard");

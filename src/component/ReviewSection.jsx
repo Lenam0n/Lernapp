@@ -1,11 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
 import HomeButton from "./HomeButton";
 import "./ReviewSection.css"; // Importiere die CSS-Datei
+import { SessionContext } from "../utils/SessionManager";
 
 // Überprüfungsbereich-Komponente
 export const ReviewSection = ({ incorrectAnswers }) => {
-  const navigate = useNavigate();
+  const { endSession } = useContext(SessionContext);
 
   return (
     <div className="review-section-container">
@@ -60,7 +60,7 @@ export const ReviewSection = ({ incorrectAnswers }) => {
           </ul>
         </>
       )}
-      <HomeButton />
+      <HomeButton func={endSession} />
     </div>
   );
 };

@@ -30,21 +30,25 @@ const icons = {
   newList: <FaPlus className="icon" />, // Icon für Neue Liste erstellen
 };
 
-const Navbar = ({ setCategory, setSubCategory }) => {
+const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [customLists, setCustomLists] = useState([]); // Custom Listen hinzufügen
   const [showCustomLists, setShowCustomLists] = useState(false); // Für Custom Listen Dropdown
   const [showCategories, setShowCategories] = useState(false); // Für Kategorien Dropdown
   const [hoveredCategory, setHoveredCategory] = useState(null); // Zum Aufklappen der Subkategorien
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const apiBaseUrl = useApi();
-  const { logout } = useUser();
+  const { loading, logout } = useUser();
 
   // Kategorien und Playlists abrufen
   useEffect(() => {
-    fetchCategories();
-    fetchCustomLists();
+    if (loading === false) {
+      setIsLoading(false);
+      fetchCategories();
+      fetchCustomLists();
+    }
   }, []);
 
   const token = Cookies.get("token"); // Hole das Token aus den Cookies
@@ -72,10 +76,6 @@ const Navbar = ({ setCategory, setSubCategory }) => {
     } catch (error) {
       console.error("Fehler beim Abrufen der Playlists:", error);
     }
-  };
-
-  const handleCustomListClick = (listId) => {
-    navigate(`/questions?list=${listId}`);
   };
 
   const handleCreateNewList = async () => {
@@ -117,192 +117,194 @@ const Navbar = ({ setCategory, setSubCategory }) => {
   };
 
   const handleCategoryClick = (category, subCategory) => {
-    setCategory(category);
-    setSubCategory(subCategory);
-    navigate(`/questions?category=${category}&subCategory=${subCategory}`);
+    navigate(`/questions/${category}/${subCategory}`);
   };
+  if (isLoading) {
+    return;
+  } else
+    return (
+      <nav
+        className={`custom-navbar ${isExpanded ? "expanded" : ""}`}
+        onMouseEnter={() => {
+          if (!isExpanded) setIsExpanded(true);
+        }}
+        onMouseLeave={() => {
+          if (isExpanded) setIsExpanded(false);
+        }}
+      >
+        <ul className="navbar-list">
+          <li className="Navbar-Icon">
+            <Link to="/home">
+              {icons.home}
+              {isExpanded && <span>Home</span>}
+            </Link>
+          </li>
 
-  return (
-    <nav
-      className={`custom-navbar ${isExpanded ? "expanded" : ""}`}
-      onMouseEnter={() => {
-        if (!isExpanded) setIsExpanded(true);
-      }}
-      onMouseLeave={() => {
-        if (isExpanded) setIsExpanded(false);
-      }}
-    >
-      <ul className="navbar-list">
-        <li>
-          <Link to="/home">
-            {icons.home}
-            {isExpanded && <span>Home</span>}
-          </Link>
-        </li>
+          {/* Dashboard */}
+          <li className="Navbar-Icon">
+            <Link to="/dashboard">
+              {icons.dashboard}
+              {isExpanded && <span>Dashboard</span>}
+            </Link>
+          </li>
 
-        {/* Dashboard */}
-        <li>
-          <Link to="/dashboard">
-            {icons.dashboard}
-            {isExpanded && <span>Dashboard</span>}
-          </Link>
-        </li>
+          {/* Prüfungsrelevant */}
+          <li className="Navbar-Icon">
+            <Link to="/questions/relevant">
+              {icons.examRelevant}
+              {isExpanded && <span>Prüfungsrelevant</span>}
+            </Link>
+          </li>
 
-        {/* Prüfungsrelevant */}
-        <li>
-          <Link to="/exam-relevant">
-            {icons.examRelevant}
-            {isExpanded && <span>Prüfungsrelevant</span>}
-          </Link>
-        </li>
-
-        {/* Kategorien Dropdown */}
-        <li
-          className="categories-dropdown"
-          onMouseEnter={() => setShowCategories(true)}
-          onMouseLeave={() => {
-            const categoriesMenu =
-              document.getElementsByClassName("categories-menu")[0];
-            const subDropdown =
-              document.getElementsByClassName("sub-dropdown")[0];
-            const categoriesDropdown = document.getElementsByClassName(
-              "categories-dropdown"
-            )[0];
-            // Prüfe, ob `categoriesMenu` oder `subDropdown` noch innerhalb von `categoriesDropdown` sind.
-            if (
-              !(
-                categoriesDropdown.contains(categoriesMenu) ||
-                categoriesDropdown.contains(subDropdown)
-              )
-            ) {
-              setShowCategories(false);
-            }
-          }}
-        >
-          <Link to="#">
-            {icons.questions}
-            {isExpanded && <span>Questions</span>}
-          </Link>
-
-          {showCategories && (
-            <div className="categories-menu">
-              {categories.map((category) => (
-                <div
-                  key={category.category}
-                  onMouseEnter={() => setHoveredCategory(category.category)}
-                  onMouseLeave={() => {
-                    const categoriesMenu =
-                      document.getElementsByClassName("categories-menu")[0];
-                    const subDropdown =
-                      document.getElementsByClassName("sub-dropdown")[0];
-                    const categoriesDropdown = document.getElementsByClassName(
-                      "categories-dropdown"
-                    )[0];
-                    if (
-                      !(
-                        categoriesDropdown.contains(categoriesMenu) ||
-                        categoriesDropdown.contains(subDropdown)
-                      )
-                    ) {
-                      setShowCategories(false);
-                    }
-                  }}
-                  className="category-item"
-                >
-                  <span className="category-navbar-title">
-                    {category.category}
-                  </span>
-                  {hoveredCategory === category.category && (
-                    <div className="sub-dropdown">
-                      {category.subCategories.map((subCategory) => (
-                        <Link
-                          to="#"
-                          key={`${category.category} - ${subCategory}`}
-                          className="sub-dropdown-item"
-                          onClick={() =>
-                            handleCategoryClick(category.category, subCategory)
-                          }
-                        >
-                          {subCategory}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </li>
-
-        {/* Custom Listen Dropdown */}
-        <li
-          className="custom-lists-dropdown"
-          onMouseEnter={() => setShowCustomLists(true)}
-          onMouseLeave={() => setShowCustomLists(false)}
-        >
-          <Link to="#">
-            {icons.customLists}
-            {isExpanded && <span>Custom Listen</span>}
-          </Link>
-
-          {showCustomLists && (
-            <div className="custom-lists-menu">
-              {customLists.length > 0 ? (
-                customLists.map((list) => (
-                  <Link
-                    to="#"
-                    key={list._id}
-                    className="custom-list-item"
-                    onClick={() => handleCustomListClick(list._id)}
-                  >
-                    {list.name}
-                  </Link>
-                ))
-              ) : (
-                <></> // Keine benutzerdefinierten Listen anzeigen
-              )}
-              {/* Neue Liste erstellen */}
-              <Link
-                to="#"
-                className="custom-list-item"
-                onClick={handleCreateNewList}
-              >
-                {icons.newList}
-                {isExpanded && <span>Neue Liste erstellen</span>}
-              </Link>
-            </div>
-          )}
-        </li>
-
-        <li>
-          <Link to="/account">
-            {icons.account}
-            {isExpanded && <span>Account</span>}
-          </Link>
-        </li>
-        <li>
-          <Link to="/settings">
-            {icons.settings}
-            {isExpanded && <span>Settings</span>}
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            to="#"
-            className="logout-button"
-            onClick={() => {
-              logout();
-              window.location.href = "/login";
+          {/* Kategorien Dropdown */}
+          <li
+            className="categories-dropdown Navbar-Icon"
+            onMouseEnter={() => setShowCategories(true)}
+            onMouseLeave={() => {
+              const categoriesMenu =
+                document.getElementsByClassName("categories-menu")[0];
+              const subDropdown =
+                document.getElementsByClassName("sub-dropdown")[0];
+              const categoriesDropdown = document.getElementsByClassName(
+                "categories-dropdown"
+              )[0];
+              // Prüfe, ob `categoriesMenu` oder `subDropdown` noch innerhalb von `categoriesDropdown` sind.
+              if (
+                !(
+                  categoriesDropdown.contains(categoriesMenu) ||
+                  categoriesDropdown.contains(subDropdown)
+                )
+              ) {
+                setShowCategories(false);
+              }
             }}
           >
-            {icons.logout}
-            {isExpanded && <span>Logout</span>}
-          </Link>
-        </li>
-      </ul>
-    </nav>
-  );
+            <Link to="/questions-overview">
+              {icons.questions}
+              {isExpanded && <span>Questions</span>}
+            </Link>
+
+            {showCategories && (
+              <div className="categories-menu">
+                {categories.map((category) => (
+                  <div
+                    key={category.category}
+                    onMouseEnter={() => setHoveredCategory(category.category)}
+                    onMouseLeave={() => {
+                      const categoriesMenu =
+                        document.getElementsByClassName("categories-menu")[0];
+                      const subDropdown =
+                        document.getElementsByClassName("sub-dropdown")[0];
+                      const categoriesDropdown =
+                        document.getElementsByClassName(
+                          "categories-dropdown"
+                        )[0];
+                      if (
+                        !(
+                          categoriesDropdown.contains(categoriesMenu) ||
+                          categoriesDropdown.contains(subDropdown)
+                        )
+                      ) {
+                        setShowCategories(false);
+                      }
+                    }}
+                    className="category-item"
+                  >
+                    <span className="category-navbar-title">
+                      {category.category}
+                    </span>
+                    {hoveredCategory === category.category && (
+                      <div className="sub-dropdown">
+                        {category.subCategories.map((subCategory) => (
+                          <button
+                            key={`${category.category} - ${subCategory}`}
+                            className="sub-dropdown-item"
+                            onClick={() =>
+                              handleCategoryClick(
+                                category.category,
+                                subCategory
+                              )
+                            }
+                          >
+                            {subCategory}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </li>
+
+          {/* Custom Listen Dropdown */}
+          <li
+            className="custom-lists-dropdown Navbar-Icon"
+            onMouseEnter={() => setShowCustomLists(true)}
+            onMouseLeave={() => setShowCustomLists(false)}
+          >
+            <Link to="/playlist-overview">
+              {icons.customLists}
+              {isExpanded && <span>Custom Listen</span>}
+            </Link>
+
+            {showCustomLists && (
+              <div className="custom-lists-menu">
+                {customLists.length > 0 ? (
+                  customLists.map((list) => (
+                    <Link
+                      to={`/questions/list/${list.name}`}
+                      key={list._id}
+                      className="custom-list-item"
+                    >
+                      {list.name}
+                    </Link>
+                  ))
+                ) : (
+                  <></> // Keine benutzerdefinierten Listen anzeigen
+                )}
+                {/* Neue Liste erstellen */}
+                <Link
+                  to="#"
+                  className="custom-list-item"
+                  onClick={handleCreateNewList}
+                >
+                  {icons.newList}
+                  {isExpanded && <span>Neue Liste erstellen</span>}
+                </Link>
+              </div>
+            )}
+          </li>
+
+          <li className="Navbar-Icon">
+            <Link to="/account">
+              {icons.account}
+              {isExpanded && <span>Account</span>}
+            </Link>
+          </li>
+          {/*           <li>
+            <Link to="/settings">
+              {icons.settings}
+              {isExpanded && <span>Settings</span>}
+            </Link>
+          </li> */}
+
+          <li className="Navbar-Icon">
+            <Link
+              to="#"
+              className="logout-button"
+              onClick={() => {
+                logout();
+                window.location.href = "/login";
+              }}
+            >
+              {icons.logout}
+              {isExpanded && <span>Logout</span>}
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    );
 };
 
 export default Navbar;

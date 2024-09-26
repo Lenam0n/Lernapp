@@ -3,8 +3,6 @@ import "./CategorieButton.css"; // Importiere die CSS-Datei
 
 const CategorieButton = ({
   navigateToQuestions,
-  setSubCategory,
-  setCategory,
   category,
   subCategory,
   name,
@@ -13,8 +11,6 @@ const CategorieButton = ({
     <button
       className="categorie-button"
       onClick={() => {
-        setCategory(category);
-        setSubCategory(subCategory);
         navigateToQuestions(category, subCategory);
       }}
     >
